@@ -1941,7 +1941,7 @@ static int parent_drop_invoke(bContext *C, wmOperator *op, const wmEvent *event)
 		BLI_assert(scene);
 		RNA_string_get(op->ptr, "child", childname);
 		ob = (Object *)BKE_libblock_find_name(ID_OB, childname);
-		BKE_collection_object_add(scene, sc, ob);
+		BKE_collection_object_add(&scene->id, sc, ob);
 
 		DEG_relations_tag_update(bmain);
 		WM_event_add_notifier(C, NC_SCENE | ND_LAYER, scene);
@@ -2173,7 +2173,7 @@ static int scene_drop_invoke(bContext *C, wmOperator *op, const wmEvent *event)
 			sc = CTX_data_scene_collection(C);
 		}
 
-		BKE_collection_object_add(scene, sc, ob);
+		BKE_collection_object_add(&scene->id, sc, ob);
 
 		for (SceneLayer *sl = scene->render_layers.first; sl; sl = sl->next) {
 			Base *base = BKE_scene_layer_base_find(sl, ob);

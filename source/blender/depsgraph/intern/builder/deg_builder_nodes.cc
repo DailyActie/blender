@@ -390,8 +390,8 @@ void DepsgraphNodeBuilder::build_group(Scene *scene, Group *group)
 	}
 	group_id->tag |= LIB_TAG_DOIT;
 
-	LINKLIST_FOREACH (GroupObject *, go, &group->gobject) {
-		build_object(scene, go->ob);
+	LINKLIST_FOREACH (Base *, base, &group->scene_layer->object_bases) {
+		build_object(scene, base->object);
 	}
 }
 
@@ -729,8 +729,8 @@ void DepsgraphNodeBuilder::build_rigidbody(Scene *scene)
 
 	/* objects - simulation participants */
 	if (rbw->group) {
-		LINKLIST_FOREACH (GroupObject *, go, &rbw->group->gobject) {
-			Object *ob = go->ob;
+		LINKLIST_FOREACH (Base *, base, &rbw->group->scene_layer->object_bases) {
+			Object *ob = base->object;
 
 			if (!ob || (ob->type != OB_MESH))
 				continue;
